@@ -34,4 +34,19 @@ const createBlogPost = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
-export { createBlogPost };
+const getAllBlogPosts = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const allUserBlogs = await client.blogPost.findMany({
+    //   where: {
+    //     authorId: req.userId,
+    //   },
+    });
+    res.status(200).json(allUserBlogs);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "Ooops. Something went wrong, please try again later" });
+  }
+};
+export { createBlogPost, getAllBlogPosts };
