@@ -37,9 +37,9 @@ const createBlogPost = async (req: AuthenticatedRequest, res: Response) => {
 const getAllBlogPosts = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const allUserBlogs = await client.blogPost.findMany({
-    //   where: {
-    //     authorId: req.userId,
-    //   },
+      //   where: {
+      //     authorId: req.userId,
+      //   },
     });
     res.status(200).json(allUserBlogs);
   } catch (error) {
@@ -49,4 +49,26 @@ const getAllBlogPosts = async (req: AuthenticatedRequest, res: Response) => {
       .json({ error: "Ooops. Something went wrong, please try again later" });
   }
 };
-export { createBlogPost, getAllBlogPosts };
+
+const getBlogById = async (req: AuthenticatedRequest, res: Response) => {
+  const { id } = req.params;
+  try {
+    const blog = await client.blogPost.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    blog
+      ? res.status(200).json(blog)
+      : res.status(404).json({
+          message: "Blog post not found",
+        });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "Ooops. Something went wrong, please try again later" });
+  }
+};
+export { createBlogPost, getAllBlogPosts, getBlogById };
