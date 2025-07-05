@@ -1,15 +1,18 @@
 import express, { Request, Response } from "express";
-import authRouter from './routes/auth.route'
+import authRouter from "./routes/auth.route";
 
 const app = express();
 app.use(express.json());
+
+import dotenv from "dotenv";
+dotenv.config();
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("<h1>Welcome to Blog Backend API</h1>");
 });
 
-app.use('/api/auth', authRouter)
-
+//Authentication views
+app.use("/api/auth", authRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
