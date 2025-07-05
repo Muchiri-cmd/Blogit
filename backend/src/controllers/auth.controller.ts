@@ -80,4 +80,10 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export { registerUser, loginUser };
+const logoutUser = async(req:Request,res:Response) => {
+    res.status(200).json({
+        message: "Logout successful."
+    })
+}
+
+export { registerUser, loginUser, logoutUser };
