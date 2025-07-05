@@ -30,6 +30,7 @@ model BlogPost{
   title String
   synopsis String
   content String
+  featuredImg String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
