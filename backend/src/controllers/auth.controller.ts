@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
+import hashPassword, { comparePassword } from "../utils/hashPass";
 import jwt from "jsonwebtoken";
 import { AuthenticatedRequest } from "../middleware/auth.middleware";
 
@@ -15,7 +15,7 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
       res.status(400).json({ error: "All required fields must be provided" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hashPassword(password);
 
     const newUser = await client.user.create({
       data: {
@@ -58,7 +58,7 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await comparePassword(password, user.password);
 
     if (!isPasswordValid) {
       res.status(401).json({ error: "Invalid password" });

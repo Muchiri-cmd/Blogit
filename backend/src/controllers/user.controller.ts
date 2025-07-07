@@ -1,6 +1,7 @@
 import { AuthenticatedRequest } from "../middleware/auth.middleware";
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import hashPassword from "../utils/hashPass";
 
 const client = new PrismaClient();
 
@@ -34,4 +35,30 @@ const updateUser = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
-export { updateUser };
+const updatePassword = async (req: AuthenticatedRequest, res: Response) => {
+  const { password } = req.body;
+
+  const hashedPassword = await hashPassword(password);
+  const id = req.userId;
+
+  try {
+    await client.user.update({
+      where: {
+        id,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+    res.status(200).json({
+      message: "Password updated successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Something went wrong , ooopsy",
+    });
+  }
+};
+
+export { updateUser, updatePassword };
