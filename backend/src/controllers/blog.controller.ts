@@ -71,4 +71,47 @@ const getBlogById = async (req: AuthenticatedRequest, res: Response) => {
       .json({ error: "Ooops. Something went wrong, please try again later" });
   }
 };
-export { createBlogPost, getAllBlogPosts, getBlogById };
+
+const updateBlog = async (req: AuthenticatedRequest, res: Response) => {
+  const { id } = req.params;
+  const { title, synopsis, content, featuredImg } = req.body;
+
+  try {
+    const updatedBlog = await client.blogPost.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        title,
+        synopsis,
+        content,
+        featuredImg,
+      },
+    });
+    res.status(200).json(updatedBlog);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Ooops. Something went wrong, please try again",
+    });
+  }
+};
+
+const deleteBlog = async (req: AuthenticatedRequest, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    await client.blogPost.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.status(200).json({ message: "Blog deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Oops. Something went wrong, please try again",
+    });
+  }
+};
+export { createBlogPost, getAllBlogPosts, getBlogById, updateBlog, deleteBlog };
