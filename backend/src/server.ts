@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import authRouter from "./routes/auth.route";
 import blogRouter from "./routes/blog.route";
+import userRouter from "./routes/user.route";
 
 const app = express();
 app.use(express.json());
@@ -17,6 +18,9 @@ app.use("/api/auth", authRouter);
 
 //BLog views
 app.use("/api/blogs", blogRouter);
+
+//User views
+app.use("/api/user", userRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

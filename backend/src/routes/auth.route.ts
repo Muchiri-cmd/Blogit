@@ -4,7 +4,6 @@ import {
   loginUser,
   logoutUser,
 } from "../controllers/auth.controller";
-import authenticate from "../middleware/auth.middleware";
 
 const router = Router();
 
