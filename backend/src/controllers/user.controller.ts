@@ -61,4 +61,22 @@ const updatePassword = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
-export { updateUser, updatePassword };
+const getUserBlogs = async (req: AuthenticatedRequest, res: Response) => {
+  const id = req.userId;
+
+  try {
+    const userBlogs = await client.blogPost.findMany({
+      where: {
+        authorId: id,
+      },
+    });
+    res.status(200).json(userBlogs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Oops. somethings wrong,please try later",
+    });
+  }
+};
+
+export { updateUser, updatePassword, getUserBlogs };
