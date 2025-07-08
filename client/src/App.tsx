@@ -1,5 +1,6 @@
-import { HomePage, LoginPage, RegisterPage } from "./pages";
+import { HomePage, LoginPage, RegisterPage, BlogPage } from "./pages";
 import { Routes, Route } from "react-router-dom";
+import "./App.css";
 
 const App = () => {
   return (
@@ -8,6 +9,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<RegisterPage />} />
+        <Route path="/blog" element={<BlogPage />} />
       </Routes>
     </>
   );

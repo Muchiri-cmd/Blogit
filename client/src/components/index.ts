@@ -1,3 +1,4 @@
 import Navbar from "./Navbar";
+import Blogs from "./Blogs";
 
-export { Navbar };
+export { Navbar, Blogs };

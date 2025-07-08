@@ -33,7 +33,16 @@ const Navbar = () => {
           // backgroundColor:'white'
         }}
       >
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+        <Typography
+          variant="h6"
+          sx={{ flexGrow: 1 }}
+          component={Link}
+          to="/"
+          style={{
+            textDecoration: "none",
+            color: "white",
+          }}
+        >
           Blogit
         </Typography>
 
@@ -48,13 +57,13 @@ const Navbar = () => {
             },
           }}
         >
-          <Button color="inherit" href="null">
-            Blogs
+          <Button color="inherit" component={Link} to="/blog">
+            Blog
           </Button>
-          <Button color="inherit" href="null">
+          <Button color="inherit" component={Link} to="/login">
             Login
           </Button>
-          <Button color="inherit" href="null">
+          <Button color="inherit" component={Link} to="/sign-up">
             Sign Up
           </Button>
           <IconButton size="large" edge="start" color="inherit">
