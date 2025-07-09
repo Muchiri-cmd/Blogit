@@ -1,4 +1,6 @@
-import React, { useState, MouseEvent } from "react";
+import { useState } from "react";
+import type { MouseEvent } from "react";
+import { isLoggedIn } from "../utils/auth";
 import {
   AppBar,
   Toolbar,
@@ -13,6 +15,7 @@ import {
 import { FaUser } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [anchorNav, setAnchorNav] = useState<null | HTMLElement>(null);
@@ -23,6 +26,14 @@ const Navbar = () => {
 
   const closeMenu = () => {
     setAnchorNav(null);
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogout = (e: MouseEvent) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   return (
@@ -57,18 +68,28 @@ const Navbar = () => {
             },
           }}
         >
-          <Button color="inherit" component={Link} to="/blog">
-            Blog
-          </Button>
-          <Button color="inherit" component={Link} to="/login">
-            Login
-          </Button>
-          <Button color="inherit" component={Link} to="/sign-up">
-            Sign Up
-          </Button>
-          <IconButton size="large" edge="start" color="inherit">
-            <FaUser />
-          </IconButton>
+          {isLoggedIn() ? (
+            <>
+              <Button color="inherit" component={Link} to="/blog">
+                Blog
+              </Button>
+              <Button color="inherit" onClick={handleLogout}>
+                Logout
+              </Button>
+              <IconButton size="large" edge="start" color="inherit">
+                <FaUser />
+              </IconButton>
+            </>
+          ) : (
+            <>
+              <Button color="inherit" component={Link} to="/login">
+                Login
+              </Button>
+              <Button color="inherit" component={Link} to="/sign-up">
+                Sign Up
+              </Button>
+            </>
+          )}
         </Stack>
         <IconButton
           onClick={openMenu}
