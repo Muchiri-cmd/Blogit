@@ -13,6 +13,7 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
     if (!firstName || !lastName || !userName || !email || !password) {
       res.status(400).json({ error: "All required fields must be provided" });
+      return;
     }
 
     const hashedPassword = await hashPassword(password);

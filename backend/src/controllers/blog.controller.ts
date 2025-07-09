@@ -40,6 +40,15 @@ const getAllBlogPosts = async (req: AuthenticatedRequest, res: Response) => {
       //   where: {
       //     authorId: req.userId,
       //   },
+      include: {
+        author: {
+          select: {
+            userName: true,
+            profilePic: true,
+            email: true,
+          },
+        },
+      },
     });
     res.status(200).json(allUserBlogs);
   } catch (error) {

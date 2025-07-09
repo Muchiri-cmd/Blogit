@@ -2,9 +2,11 @@ import express, { Request, Response } from "express";
 import authRouter from "./routes/auth.route";
 import blogRouter from "./routes/blog.route";
 import userRouter from "./routes/user.route";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 import dotenv from "dotenv";
 dotenv.config();
