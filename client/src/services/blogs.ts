@@ -28,4 +28,14 @@ const createNewBlog = async (blogData: BlogData) => {
   return res.data;
 };
 
-export { getAllBlogs, createNewBlog };
+const getBlog = async (id: number) => {
+  console.log("Requesting blog from:", `${baseUrl}/${id}`);
+  const res = await axios.get(`${baseUrl}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};
+
+export { getAllBlogs, createNewBlog, getBlog };

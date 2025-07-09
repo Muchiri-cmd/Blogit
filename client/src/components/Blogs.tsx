@@ -7,7 +7,10 @@ import {
   CardMedia,
 } from "@mui/material";
 
+import { Link } from "react-router-dom";
+
 interface Blog {
+  id: string;
   title: string;
   synopsis: string;
   featuredImg: string;
@@ -70,7 +73,13 @@ const Blogs = ({ blogs }: BlogsProps) => {
                 }}
               />
               <CardContent>
-                <Typography variant="h5">{blog.title}</Typography>
+                <Typography
+                  variant="h5"
+                  component={Link}
+                  to={`/blog/${blog.id}`}
+                >
+                  {blog.title}
+                </Typography>
                 <Typography variant="body2">{blog.synopsis}</Typography>
 
                 <Box
