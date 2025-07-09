@@ -1,6 +1,6 @@
 import { HomePage, LoginPage, RegisterPage, BlogPage } from "./pages";
 import { Routes, Route } from "react-router-dom";
-import { ProtectedRoute } from "./components";
+import { ProtectedRoute, BlogForm } from "./components";
 import "./App.css";
 
 const App = () => {
@@ -19,6 +19,14 @@ const App = () => {
         <Route path="/sign-up" element={<RegisterPage />} />
         <Route
           path="/blog"
+          element={
+            <ProtectedRoute>
+              <BlogForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/blog/:id"
           element={
             <ProtectedRoute>
               <BlogPage />

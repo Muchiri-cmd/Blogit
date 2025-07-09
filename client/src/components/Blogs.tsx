@@ -7,7 +7,21 @@ import {
   CardMedia,
 } from "@mui/material";
 
-const Blogs = () => {
+interface Blog {
+  title: string;
+  synopsis: string;
+  featuredImg: string;
+  content: string;
+  createdAt: string;
+  author: {
+    userName: string;
+  };
+}
+
+interface BlogsProps {
+  blogs: Blog[];
+}
+const Blogs = ({ blogs }: BlogsProps) => {
   return (
     <Box
       sx={{
@@ -32,60 +46,66 @@ const Blogs = () => {
           padding: "1.5rem",
         }}
       >
-        <Grid size={3}>
-          <Card
-            sx={{
-              // border:'2px solid red',
-              maxHeight: "420px",
-              width: "100%",
-              boxShadow: 5,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "5px",
-            }}
-          >
-            <CardMedia
-              component="img"
-              image="./dollars.jpg"
+        {blogs.map((blog, index) => (
+          <Grid size={3} key={index}>
+            <Card
               sx={{
-                objectFit: "cover",
-                maxHeight: "280px",
+                // border:'2px solid red',
+                maxHeight: "420px",
+                width: "100%",
+                boxShadow: 5,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "5px",
               }}
-            />
-            <CardContent>
-              <Typography variant="h5">How to get Rich</Typography>
-              <Typography variant="body2">
-                A collection of all Naval's ideas from his tweetstorm how to get
-                rich without getting lucky
-              </Typography>
-
-              <Box
+            >
+              <CardMedia
+                component="img"
+                image="./dollars.jpg"
                 sx={{
-                  // border:'2px solid red',
-                  textAlign: "right",
-                  marginTop: "1rem",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  justifyContent: "space-between",
+                  objectFit: "cover",
+                  maxHeight: "280px",
                 }}
-              >
-                <CardMedia
-                  component="img"
-                  height="50px"
-                  image="./user1.jpg"
+              />
+              <CardContent>
+                <Typography variant="h5">{blog.title}</Typography>
+                <Typography variant="body2">{blog.synopsis}</Typography>
+
+                <Box
                   sx={{
-                    borderRadius: "50%",
-                    width: "50px",
+                    // border:'2px solid red',
+                    textAlign: "right",
+                    marginTop: "1rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    justifyContent: "space-between",
                   }}
-                />
-                <Typography variant="body2">Naval 15th Jan 2025 </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
+                >
+                  <CardMedia
+                    component="img"
+                    height="50px"
+                    image="./user1.jpg"
+                    sx={{
+                      borderRadius: "50%",
+                      width: "50px",
+                    }}
+                  />
+                  <Box>
+                    <Typography variant="body2">
+                      {blog.author.userName}
+                    </Typography>
+                    <Typography variant="body2">
+                      {new Date(blog.createdAt).toLocaleDateString()}
+                    </Typography>
+                  </Box>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );

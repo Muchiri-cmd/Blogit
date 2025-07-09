@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { isLoggedIn } from "../utils/auth";
 import { Navigate } from "react-router-dom";
 
