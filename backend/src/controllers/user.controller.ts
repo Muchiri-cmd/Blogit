@@ -69,6 +69,14 @@ const getUserBlogs = async (req: AuthenticatedRequest, res: Response) => {
       where: {
         authorId: id,
       },
+      include: {
+        author: {
+          select: {
+            userName: true,
+            profilePic: true,
+          },
+        },
+      },
     });
     res.status(200).json(userBlogs);
   } catch (error) {
