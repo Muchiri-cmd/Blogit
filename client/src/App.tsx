@@ -1,10 +1,17 @@
-import { HomePage, LoginPage, RegisterPage, BlogPage } from "./pages";
+import {
+  HomePage,
+  LoginPage,
+  RegisterPage,
+  BlogPage,
+  UpdatePassword,
+} from "./pages";
 import { Routes, Route } from "react-router-dom";
 import {
   ProtectedRoute,
   BlogForm,
   UserBlogs,
   UpdateBlogForm,
+  UpdateUserForm,
 } from "./components";
 import "./App.css";
 
@@ -51,6 +58,22 @@ const App = () => {
           element={
             <ProtectedRoute>
               <UpdateBlogForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/update-user"
+          element={
+            <ProtectedRoute>
+              <UpdateUserForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/update-password"
+          element={
+            <ProtectedRoute>
+              <UpdatePassword />
             </ProtectedRoute>
           }
         />

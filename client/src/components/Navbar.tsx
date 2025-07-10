@@ -13,7 +13,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { FaUser } from "react-icons/fa";
-import { MdMenu } from "react-icons/md";
+import { MdMenu, MdOutlinePassword } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -79,8 +79,23 @@ const Navbar = () => {
               <Button color="inherit" onClick={handleLogout}>
                 Logout
               </Button>
-              <IconButton size="large" edge="start" color="inherit">
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                component={Link}
+                to="/update-user"
+              >
                 <FaUser />
+              </IconButton>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                component={Link}
+                to="/update-password"
+              >
+                <MdOutlinePassword />
               </IconButton>
             </>
           ) : (

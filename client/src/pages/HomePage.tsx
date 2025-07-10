@@ -11,7 +11,7 @@ const HomePage = () => {
     const fetchBlogs = async () => {
       try {
         const blogs = await getAllBlogs();
-        console.log(blogs);
+        // console.log(blogs);
         setBlogs(blogs);
       } catch (error) {
         console.error("Error fetching blogs:", error);
