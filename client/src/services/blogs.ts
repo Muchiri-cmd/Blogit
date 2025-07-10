@@ -38,4 +38,13 @@ const getBlog = async (id: number) => {
   return res.data;
 };
 
-export { getAllBlogs, createNewBlog, getBlog };
+const getUserBlogs = async () => {
+  const res = await axios.get("http://localhost:3000/api/user/blogs", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};
+
+export { getAllBlogs, createNewBlog, getBlog, getUserBlogs };
