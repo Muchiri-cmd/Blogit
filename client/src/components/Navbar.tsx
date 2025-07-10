@@ -71,10 +71,10 @@ const Navbar = () => {
           {isLoggedIn() ? (
             <>
               <Button color="inherit" component={Link} to="/blog">
-                Blog
+                Create Blog
               </Button>
               <Button color="inherit" component={Link} to="/blogs">
-                Blogs
+                My Blogs
               </Button>
               <Button color="inherit" onClick={handleLogout}>
                 Logout

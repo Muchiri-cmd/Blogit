@@ -47,4 +47,28 @@ const getUserBlogs = async () => {
   return res.data;
 };
 
-export { getAllBlogs, createNewBlog, getBlog, getUserBlogs };
+const deleteBlog = async (id: number) => {
+  const res = await axios.delete(`${baseUrl}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};
+
+const updateBlog = async (id: number, updateData: BlogData) => {
+  const res = await axios.patch(`${baseUrl}/${id}`, updateData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};
+export {
+  getAllBlogs,
+  createNewBlog,
+  getBlog,
+  getUserBlogs,
+  deleteBlog,
+  updateBlog,
+};

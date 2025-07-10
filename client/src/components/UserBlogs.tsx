@@ -7,9 +7,10 @@ import {
   Card,
   CardMedia,
   CardContent,
+  Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { getUserBlogs } from "../services/blogs";
+import { getUserBlogs, deleteBlog } from "../services/blogs";
 
 interface Blog {
   id: string;
@@ -30,7 +31,7 @@ const UserBlogs = () => {
     const fetchBlogs = async () => {
       try {
         const userBlogs = await getUserBlogs();
-        console.log("UserBLogs", userBlogs);
+        // console.log("UserBLogs", userBlogs);
         setBlogs(userBlogs);
       } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -39,12 +40,26 @@ const UserBlogs = () => {
     fetchBlogs();
   }, []);
 
+  const handleDelete = async (id: Number) => {
+    try {
+      console.log(`Deleting blog ${id}`);
+      // await deleteBlog(Number(id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Navbar />
       <Box
         sx={{
           marginTop: "70px",
+          // border:'2px solid red',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
         }}
       >
         <Grid
@@ -52,14 +67,20 @@ const UserBlogs = () => {
           spacing={2}
           sx={{
             padding: "1.5rem",
+            display: "flex",
+            flexDirection: "column",
+            // border:'2px solid blue',
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
+          <Typography>ALL MY POSTS</Typography>
           {blogs.map((blog, index) => (
-            <Grid size={3} key={index}>
+            <Grid size={8} key={index}>
               <Card
                 sx={{
                   // border:'2px solid red',
-                  maxHeight: "420px",
+                  maxHeight: "500px",
                   width: "100%",
                   boxShadow: 5,
                   display: "flex",
@@ -98,7 +119,7 @@ const UserBlogs = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <CardMedia
+                    {/* <CardMedia
                       component="img"
                       height="50px"
                       image="./user1.jpg"
@@ -106,15 +127,42 @@ const UserBlogs = () => {
                         borderRadius: "50%",
                         width: "50px",
                       }}
-                    />
-                    <Box>
+                    /> */}
+                    {/* <Box>
                       <Typography variant="body2">
                         {blog.author.userName}
                       </Typography>
                       <Typography variant="body2">
                         {new Date(blog.createdAt).toLocaleDateString()}
                       </Typography>
-                    </Box>
+                    </Box> */}
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: 2,
+                      marginTop: "1rem",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      component={Link}
+                      to={`/update-blog/${blog.id}`}
+                    >
+                      Edit Post
+                    </Button>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "#dc3545",
+                      }}
+                      onClick={() => handleDelete(Number(blog.id))}
+                      // component={Link}
+                      // to={`/delete-blog/${blog.id}`}
+                    >
+                      Delete Post
+                    </Button>
                   </Box>
                 </CardContent>
               </Card>
