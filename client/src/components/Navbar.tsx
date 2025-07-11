@@ -13,19 +13,30 @@ import {
   MenuItem,
 } from "@mui/material";
 import { FaUser } from "react-icons/fa";
-import { MdMenu, MdOutlinePassword } from "react-icons/md";
+import { MdMenu } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const [anchorNav, setAnchorNav] = useState<null | HTMLElement>(null);
+  const [anchorUserMenu, setAnchorUserMenu] = useState<null | HTMLElement>(
+    null,
+  );
+  const [anchorMobileMenu, setAnchorMobileMenu] = useState<null | HTMLElement>(
+    null,
+  );
 
-  const openMenu = (e: MouseEvent<HTMLElement>) => {
-    setAnchorNav(e.currentTarget);
+  const openUserMenu = (e: MouseEvent<HTMLElement>) => {
+    setAnchorUserMenu(e.currentTarget);
+  };
+  const closeUserMenu = () => {
+    setAnchorUserMenu(null);
   };
 
-  const closeMenu = () => {
-    setAnchorNav(null);
+  const openMobileMenu = (e: MouseEvent<HTMLElement>) => {
+    setAnchorMobileMenu(e.currentTarget);
+  };
+  const closeMobileMenu = () => {
+    setAnchorMobileMenu(null);
   };
 
   const navigate = useNavigate();
@@ -83,20 +94,45 @@ const Navbar = () => {
                 size="large"
                 edge="start"
                 color="inherit"
-                component={Link}
-                to="/update-user"
+                onClick={openUserMenu}
               >
                 <FaUser />
               </IconButton>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                component={Link}
-                to="/update-password"
+              <Menu
+                open={Boolean(anchorUserMenu)}
+                onClose={closeUserMenu}
+                anchorEl={anchorUserMenu}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
               >
-                <MdOutlinePassword />
-              </IconButton>
+                <MenuList
+                  sx={{
+                    width: "180px",
+                  }}
+                >
+                  <MenuItem
+                    onClick={closeUserMenu}
+                    component={Link}
+                    to="/update-user"
+                  >
+                    Update User
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  <MenuItem
+                    onClick={closeUserMenu}
+                    component={Link}
+                    to="/update-password"
+                  >
+                    Update Password
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             </>
           ) : (
             <>
@@ -110,7 +146,7 @@ const Navbar = () => {
           )}
         </Stack>
         <IconButton
-          onClick={openMenu}
+          onClick={openMobileMenu}
           sx={{
             color: "white",
             display: {
@@ -121,9 +157,9 @@ const Navbar = () => {
           <MdMenu />
         </IconButton>
         <Menu
-          open={Boolean(anchorNav)}
-          onClose={closeMenu}
-          anchorEl={anchorNav}
+          open={Boolean(anchorMobileMenu)}
+          onClose={closeMobileMenu}
+          anchorEl={anchorMobileMenu}
           anchorOrigin={{
             vertical: "bottom",
             horizontal: "right",
@@ -138,16 +174,16 @@ const Navbar = () => {
               width: "120px",
             }}
           >
-            <MenuItem onClick={closeMenu} component={Link} to="/">
+            <MenuItem onClick={closeMobileMenu} component={Link} to="/">
               Home
             </MenuItem>
-            <MenuItem onClick={closeMenu} component={Link} to="/blogs">
+            <MenuItem onClick={closeMobileMenu} component={Link} to="/blogs">
               Blogs
             </MenuItem>
-            <MenuItem onClick={closeMenu} component={Link} to="/login">
+            <MenuItem onClick={closeMobileMenu} component={Link} to="/login">
               Login
             </MenuItem>
-            <MenuItem onClick={closeMenu} component={Link} to="sign-up">
+            <MenuItem onClick={closeMobileMenu} component={Link} to="sign-up">
               SignUp
             </MenuItem>
           </MenuList>

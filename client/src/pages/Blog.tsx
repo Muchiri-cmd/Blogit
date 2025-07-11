@@ -14,6 +14,7 @@ interface BlogProps {
 
 const Blog = () => {
   const { id } = useParams();
+
   const [blog, setBlog] = useState<BlogProps>({
     author: "",
     content: "",

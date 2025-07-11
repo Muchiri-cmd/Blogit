@@ -18,7 +18,8 @@ const UpdatePassword = () => {
   const handleUpdate = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const res = await updatePassword(newPassword);
+      // const res =
+      await updatePassword(newPassword);
       // console.log('successfully updated password', res)
       navigate("/login");
     } catch (error) {
