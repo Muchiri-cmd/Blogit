@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Navbar from "./Navbar";
 import {
   Box,
@@ -8,22 +8,70 @@ import {
   Grid,
   TextField,
   Button,
+  Input,
 } from "@mui/material";
-import { updateUser } from "../services/user";
+import { getUser, updateUser } from "../services/user";
+import { useNavigate } from "react-router-dom";
+import type { FormEvent } from "react";
+
+const CLOUDINARY_URL = import.meta.env.VITE_CLOUDINARY_URL;
+const CLOUDINARY_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET;
 
 const UpdateUserForm = () => {
+  const navigate = useNavigate();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  // const [profilePic,setProfilePic] = useState('')
+  const [profilePic, setProfilePic] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleUpdate = async () => {
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await getUser();
+        // console.log("user", res)
+        setFirstName(res.firstName);
+        setLastName(res.lastName);
+        setUsername(res.userName);
+        setEmail(res.email);
+      } catch (error) {
+        console.log(`Error fetching user`, error);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  const handleUpdate = async (e: FormEvent) => {
+    e.preventDefault();
     try {
-      const userData = { firstName, lastName, userName, email };
+      const userData = { firstName, lastName, userName, email, profilePic };
       await updateUser(userData);
+      navigate("/");
     } catch (error) {
       console.log("error updating user", error);
+    }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_PRESET);
+
+    try {
+      const res = await fetch(CLOUDINARY_URL, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      setProfilePic(data.secure_url);
+    } catch (error) {
+      console.error("Cloudinary upload failed", error);
     }
   };
 
@@ -50,7 +98,7 @@ const UpdateUserForm = () => {
           <Typography variant="h5" mb={3} textAlign="center">
             Update User
           </Typography>
-          <form action="" onSubmit={handleUpdate}>
+          <form onSubmit={handleUpdate}>
             <Stack spacing={2}>
               <Grid container spacing={2}>
                 <Grid>
@@ -88,7 +136,32 @@ const UpdateUserForm = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
 
-              <Button variant="contained" sx={{ mt: 2 }} type="submit">
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 5,
+                }}
+              >
+                <Input
+                  type="file"
+                  required
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                />
+                <Button
+                  variant="contained"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  Upload Profile Pic
+                </Button>
+              </Box>
+
+              <Button
+                variant="contained"
+                sx={{ mt: 2 }}
+                type="submit"
+                disabled={!profilePic}
+              >
                 Update User
               </Button>
             </Stack>

@@ -6,17 +6,23 @@ import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
 interface BlogProps {
-  author: string;
   content: string;
   title: string;
   createdAt: string;
+  author: {
+    userName: string;
+    profilePic: string;
+  };
 }
 
 const Blog = () => {
   const { id } = useParams();
 
   const [blog, setBlog] = useState<BlogProps>({
-    author: "",
+    author: {
+      userName: "",
+      profilePic: "",
+    },
     content: "",
     title: "",
     createdAt: "",
@@ -25,7 +31,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       const res = await getBlog(Number(id));
-      // console.log("BLog:", res)
+      console.log("BLog:", res);
       setBlog(res);
     };
     fetchBlog();
@@ -63,7 +69,11 @@ const Blog = () => {
           <CardMedia
             component="img"
             height="50px"
-            image="/profile-picture.png"
+            image={
+              blog.author.profilePic
+                ? blog.author.profilePic
+                : "/profile-picture.png"
+            }
             sx={{
               borderRadius: "50%",
               width: "50px",

@@ -33,4 +33,13 @@ const updatePassword = async (password: string) => {
   return res.data;
 };
 
-export { updateUser, updatePassword };
+const getUser = async () => {
+  const res = await axios.get(`${baseUrl}/current-user`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};
+
+export { updateUser, updatePassword, getUser };

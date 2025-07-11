@@ -18,6 +18,7 @@ interface Blog {
   createdAt: string;
   author: {
     userName: string;
+    profilePic: string;
   };
 }
 
@@ -25,6 +26,7 @@ interface BlogsProps {
   blogs: Blog[];
 }
 const Blogs = ({ blogs }: BlogsProps) => {
+  console.log(blogs);
   return (
     <Box
       sx={{
@@ -96,7 +98,11 @@ const Blogs = ({ blogs }: BlogsProps) => {
                   <CardMedia
                     component="img"
                     height="50px"
-                    image="./profile-picture.png"
+                    image={
+                      blog.author.profilePic
+                        ? blog.author.profilePic
+                        : "/profile-picture.png"
+                    }
                     sx={{
                       borderRadius: "50%",
                       width: "50px",
