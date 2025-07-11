@@ -5,6 +5,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import UserBlogs from "./userBlogs";
 import UpdateBlogForm from "./UpdateBlogForm";
 import UpdateUserForm from "./UpdateUserForm";
+import UpdatePassword from "./UpdatePassword";
 
 export {
   Navbar,
@@ -14,4 +15,5 @@ export {
   UserBlogs,
   UpdateBlogForm,
   UpdateUserForm,
+  UpdatePassword,
 };

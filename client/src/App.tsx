@@ -3,7 +3,7 @@ import {
   LoginPage,
   RegisterPage,
   BlogPage,
-  UpdatePassword,
+  UserProfilePage,
 } from "./pages";
 import { Routes, Route } from "react-router-dom";
 import {
@@ -11,7 +11,6 @@ import {
   BlogForm,
   UserBlogs,
   UpdateBlogForm,
-  UpdateUserForm,
 } from "./components";
 import "./App.css";
 
@@ -62,18 +61,10 @@ const App = () => {
           }
         />
         <Route
-          path="/update-user"
+          path="/user-profile"
           element={
             <ProtectedRoute>
-              <UpdateUserForm />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/update-password"
-          element={
-            <ProtectedRoute>
-              <UpdatePassword />
+              <UserProfilePage />
             </ProtectedRoute>
           }
         />

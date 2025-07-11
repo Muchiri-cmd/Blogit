@@ -31,11 +31,12 @@ const UpdateUserForm = () => {
     const fetchUser = async () => {
       try {
         const res = await getUser();
-        // console.log("user", res)
+        console.log("user", res);
         setFirstName(res.firstName);
         setLastName(res.lastName);
         setUsername(res.userName);
         setEmail(res.email);
+        setProfilePic(res.profilePic);
       } catch (error) {
         console.log(`Error fetching user`, error);
       }
@@ -136,24 +137,40 @@ const UpdateUserForm = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
 
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 5,
-                }}
-              >
-                <Input
-                  type="file"
-                  required
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                />
-                <Button
-                  variant="contained"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  Upload Profile Pic
-                </Button>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+                {profilePic && (
+                  <Box>
+                    <Typography variant="body2" mb={1}>
+                      Current Profile Picture:
+                    </Typography>
+                    <img
+                      src={profilePic}
+                      alt="Profile"
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        border: "1px solid #ccc",
+                      }}
+                    />
+                  </Box>
+                )}
+
+                <Box>
+                  <Input
+                    type="file"
+                    inputRef={fileInputRef}
+                    onChange={handleFileChange}
+                  />
+                  <Button
+                    variant="contained"
+                    onClick={() => fileInputRef.current?.click()}
+                    sx={{ mt: 1 }}
+                  >
+                    Upload New Picture
+                  </Button>
+                </Box>
               </Box>
 
               <Button

@@ -119,18 +119,11 @@ const Navbar = () => {
                   <MenuItem
                     onClick={closeUserMenu}
                     component={Link}
-                    to="/update-user"
+                    to="/user-profile"
                   >
-                    Update User
+                    User Profile
                   </MenuItem>
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                  <MenuItem
-                    onClick={closeUserMenu}
-                    component={Link}
-                    to="/update-password"
-                  >
-                    Update Password
-                  </MenuItem>
                 </MenuList>
               </Menu>
             </>

@@ -142,25 +142,41 @@ const UpdateBlogForm = () => {
                 rows={7}
               />
 
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 5,
-                }}
-              >
-                <Input
-                  type="file"
-                  required
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                />
-                <Button
-                  variant="contained"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  Update Featured Image
-                </Button>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+                {featuredImg && (
+                  <Box>
+                    <Typography variant="body2" mb={1}>
+                      Current Featured Img:
+                    </Typography>
+                    <img
+                      src={featuredImg}
+                      alt="Profile"
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        objectFit: "cover",
+                        border: "1px solid #ccc",
+                      }}
+                    />
+                  </Box>
+                )}
+
+                <Box>
+                  <Input
+                    type="file"
+                    inputRef={fileInputRef}
+                    onChange={handleFileChange}
+                  />
+                  <Button
+                    variant="contained"
+                    onClick={() => fileInputRef.current?.click()}
+                    sx={{ mt: 1 }}
+                  >
+                    Upload New Picture
+                  </Button>
+                </Box>
               </Box>
+
               <Button
                 variant="contained"
                 sx={{ mt: 2 }}
