@@ -87,4 +87,28 @@ const getUserBlogs = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
-export { updateUser, updatePassword, getUserBlogs };
+const getCurrentUser = async (req: AuthenticatedRequest, res: Response) => {
+  const id = req.userId;
+
+  try {
+    const user = await client.user.findFirst({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        userName: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        profilePic: true,
+      },
+    });
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Ooops , something went wrong." });
+  }
+};
+
+export { updateUser, updatePassword, getUserBlogs, getCurrentUser };

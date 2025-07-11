@@ -66,6 +66,15 @@ const getBlogById = async (req: AuthenticatedRequest, res: Response) => {
       where: {
         id: Number(id),
       },
+      include: {
+        author: {
+          select: {
+            userName: true,
+            profilePic: true,
+            email: true,
+          },
+        },
+      },
     });
 
     blog
