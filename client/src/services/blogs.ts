@@ -48,6 +48,7 @@ const getUserBlogs = async () => {
 };
 
 const deleteBlog = async (id: number) => {
+  console.log("calling api to delete");
   const res = await axios.delete(`${baseUrl}/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,

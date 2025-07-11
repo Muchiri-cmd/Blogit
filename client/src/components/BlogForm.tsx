@@ -6,15 +6,20 @@ import {
   TextField,
   Button,
   Stack,
+  Input,
 } from "@mui/material";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { createNewBlog } from "../services/blogs";
 import { useNavigate } from "react-router-dom";
+
+const CLOUDINARY_URL = import.meta.env.VITE_CLOUDINARY_URL;
+const CLOUDINARY_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET;
 
 const BlogForm = () => {
   const [title, setTitle] = useState("");
   const [synopsis, setSynopsis] = useState("");
   const [featuredImg, setFeaturedImg] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [content, setContent] = useState("");
 
   const navigate = useNavigate();
@@ -28,6 +33,27 @@ const BlogForm = () => {
     setSynopsis("");
     setContent("");
     navigate("/");
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_PRESET);
+
+    try {
+      const res = await fetch(CLOUDINARY_URL, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      setFeaturedImg(data.secure_url);
+    } catch (error) {
+      console.error("Cloudinary upload failed", error);
+    }
   };
 
   return (
@@ -59,39 +85,54 @@ const BlogForm = () => {
             <Stack spacing={2}>
               <TextField
                 label="Title"
-                type="title"
+                type="text"
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
               <TextField
                 label="Synopsis"
-                type="synopsis"
+                type="text"
                 required
                 value={synopsis}
                 onChange={(e) => setSynopsis(e.target.value)}
               />
-              {/* <TextField
-                label="Featured Image URL"
-                type="featuredImg"
-                required
-                value={featuredImg}
-                onChange={(e) => setFeaturedImg(e.target.value)}
-              /> */}
               <TextField
                 label="Content"
-                type="content"
+                placeholder="Write your blog post here using markdown syntax..."
                 required
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 multiline
                 rows={7}
               />
+
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 5,
+                }}
+              >
+                <Input
+                  type="file"
+                  required
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                />
+                <Button
+                  variant="contained"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  Upload Featured Image
+                </Button>
+              </Box>
+
               <Button
                 variant="contained"
                 sx={{ mt: 2 }}
                 type="submit"
                 onClick={handleAddBlog}
+                disabled={!featuredImg}
               >
                 Add Blog
               </Button>

@@ -6,11 +6,15 @@ import {
   Stack,
   TextField,
   Button,
+  Input,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getBlog, updateBlog } from "../services/blogs";
 import type { FormEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+
+const CLOUDINARY_URL = import.meta.env.VITE_CLOUDINARY_URL;
+const CLOUDINARY_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET;
 
 interface BlogData {
   id: string;
@@ -29,6 +33,8 @@ const UpdateBlogForm = () => {
   const [synopsis, setSynopsis] = useState("");
   const [featuredImg, setFeaturedImg] = useState("");
   const [content, setContent] = useState("");
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -60,6 +66,27 @@ const UpdateBlogForm = () => {
       navigate("/blogs");
     } catch (error) {
       console.error("Error updating blog", error);
+    }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_PRESET);
+
+    try {
+      const res = await fetch(CLOUDINARY_URL, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      setFeaturedImg(data.secure_url);
+    } catch (error) {
+      console.error("Cloudinary upload failed", error);
     }
   };
 
@@ -104,13 +131,7 @@ const UpdateBlogForm = () => {
                 value={synopsis}
                 onChange={(e) => setSynopsis(e.target.value)}
               />
-              {/* <TextField
-                label="Featured Image URL"
-                type="featuredImg"
-                required
-                value={featuredImg}
-                onChange={(e) => setFeaturedImg(e.target.value)}
-              /> */}
+
               <TextField
                 label="Content"
                 type="content"
@@ -120,7 +141,32 @@ const UpdateBlogForm = () => {
                 multiline
                 rows={7}
               />
-              <Button variant="contained" sx={{ mt: 2 }} type="submit">
+
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 5,
+                }}
+              >
+                <Input
+                  type="file"
+                  required
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                />
+                <Button
+                  variant="contained"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  Update Featured Image
+                </Button>
+              </Box>
+              <Button
+                variant="contained"
+                sx={{ mt: 2 }}
+                type="submit"
+                disabled={!featuredImg}
+              >
                 Update Blog
               </Button>
             </Stack>

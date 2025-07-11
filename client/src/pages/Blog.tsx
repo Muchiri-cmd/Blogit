@@ -3,6 +3,7 @@ import { Navbar } from "../components";
 import { useEffect, useState } from "react";
 import { getBlog } from "../services/blogs";
 import { useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 interface BlogProps {
   author: string;
@@ -61,13 +62,12 @@ const Blog = () => {
           <CardMedia
             component="img"
             height="50px"
-            image="./user1.jpg"
+            image="/profile-picture.png"
             sx={{
               borderRadius: "50%",
               width: "50px",
             }}
           />
-          <Typography variant="body2">{blog.author} </Typography>
           <Chip label="4 min read" size="small" />
           <Typography variant="body2">
             {" "}
@@ -81,7 +81,7 @@ const Blog = () => {
             padding: "2rem",
           }}
         >
-          <Typography>{blog.content}</Typography>
+          <ReactMarkdown>{blog.content}</ReactMarkdown>
         </Box>
       </Box>
     </>

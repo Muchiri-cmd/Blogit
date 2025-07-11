@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { getUserBlogs, deleteBlog } from "../services/blogs";
 
 interface Blog {
-  id: string;
+  id: number;
   title: string;
   synopsis: string;
   featuredImg: string;
@@ -40,10 +40,11 @@ const UserBlogs = () => {
     fetchBlogs();
   }, []);
 
-  const handleDelete = async (id: Number) => {
+  const handleDelete = async (id: number) => {
     try {
       console.log(`Deleting blog ${id}`);
-      // await deleteBlog(Number(id));
+      await deleteBlog(Number(id));
+      setBlogs((blogs) => blogs.filter((blog) => Number(blog.id) !== id));
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +93,7 @@ const UserBlogs = () => {
               >
                 <CardMedia
                   component="img"
-                  image="./dollars.jpg"
+                  image={blog.featuredImg}
                   sx={{
                     objectFit: "cover",
                     maxHeight: "280px",

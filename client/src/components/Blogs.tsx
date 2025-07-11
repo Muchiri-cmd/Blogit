@@ -54,7 +54,7 @@ const Blogs = ({ blogs }: BlogsProps) => {
             <Card
               sx={{
                 // border:'2px solid red',
-                maxHeight: "420px",
+                minheight: "450px",
                 width: "100%",
                 boxShadow: 5,
                 display: "flex",
@@ -66,10 +66,10 @@ const Blogs = ({ blogs }: BlogsProps) => {
             >
               <CardMedia
                 component="img"
-                image="./dollars.jpg"
+                image={blog.featuredImg}
                 sx={{
                   objectFit: "cover",
-                  maxHeight: "280px",
+                  height: "300px",
                 }}
               />
               <CardContent>
@@ -96,7 +96,7 @@ const Blogs = ({ blogs }: BlogsProps) => {
                   <CardMedia
                     component="img"
                     height="50px"
-                    image="./user1.jpg"
+                    image="./profile-picture.png"
                     sx={{
                       borderRadius: "50%",
                       width: "50px",
