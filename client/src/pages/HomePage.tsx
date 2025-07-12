@@ -22,7 +22,12 @@ const HomePage = () => {
 
   return (
     <>
-      <Box>
+      <Box
+        sx={{
+          backgroundColor: "#fafafa",
+          minHeight: "100vh",
+        }}
+      >
         <Navbar />
         <Blogs blogs={blogs} />
       </Box>

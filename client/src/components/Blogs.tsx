@@ -5,7 +5,10 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Stack,
+  IconButton,
 } from "@mui/material";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
 
@@ -26,22 +29,27 @@ interface BlogsProps {
   blogs: Blog[];
 }
 const Blogs = ({ blogs }: BlogsProps) => {
-  console.log(blogs);
+  // console.log(blogs);
   return (
     <Box
       sx={{
         marginTop: "70px",
+        backgroundColor: "#fafafa",
+        pt: 2,
+        pb: 8,
       }}
     >
       <Typography
-        variant="h5"
+        variant="h3"
         sx={{
-          borderBottom: "2px solid lightblue",
-          width: "30%",
-          padding: ".5rem",
+          fontWeight: 800,
+          color: "#1a1a1a",
+          mb: 2,
+          letterSpacing: "-0.02em",
+          textAlign: "center",
         }}
       >
-        Stay up to date with our latest articles
+        Latest Insights
       </Typography>
 
       <Grid
@@ -56,7 +64,7 @@ const Blogs = ({ blogs }: BlogsProps) => {
             <Card
               sx={{
                 // border:'2px solid red',
-                minheight: "450px",
+                height: "500px",
                 width: "100%",
                 boxShadow: 5,
                 display: "flex",
@@ -64,6 +72,12 @@ const Blogs = ({ blogs }: BlogsProps) => {
                 alignItems: "center",
                 justifyContent: "center",
                 borderRadius: "5px",
+                overflow: "hidden",
+                "&:hover": {
+                  transform: "translateY(-2px)",
+                  transition: "all 0.3s ease",
+                  cursor: "pointer",
+                },
               }}
             >
               <CardMedia
@@ -71,18 +85,54 @@ const Blogs = ({ blogs }: BlogsProps) => {
                 image={blog.featuredImg}
                 sx={{
                   objectFit: "cover",
-                  height: "300px",
+                  height: 250,
+                  transition: "transform 0.3s ease",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                  },
                 }}
               />
-              <CardContent>
+              <CardContent
+                sx={{ flex: 1, display: "flex", flexDirection: "column" }}
+              >
                 <Typography
                   variant="h5"
                   component={Link}
                   to={`/blog/${blog.id}`}
+                  sx={{
+                    textDecoration: "none",
+                    fontWeight: 700,
+                    lineHeight: 1.2,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    color: "black",
+                    "&:hover": {
+                      color: "mediumslateblue",
+                      transition: "color 0.2s ease",
+                    },
+                  }}
                 >
                   {blog.title}
                 </Typography>
-                <Typography variant="body2">{blog.synopsis}</Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    lineHeight: 1.4,
+                    flex: 1,
+                    mb: 1,
+                    mt: 1,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: "vertical",
+                  }}
+                >
+                  {blog.synopsis}
+                </Typography>
 
                 <Box
                   sx={{
@@ -97,7 +147,7 @@ const Blogs = ({ blogs }: BlogsProps) => {
                 >
                   <CardMedia
                     component="img"
-                    height="50px"
+                    height="60px"
                     image={
                       blog.author.profilePic
                         ? blog.author.profilePic
@@ -105,18 +155,56 @@ const Blogs = ({ blogs }: BlogsProps) => {
                     }
                     sx={{
                       borderRadius: "50%",
-                      width: "50px",
+                      width: "60px",
                     }}
                   />
                   <Box>
-                    <Typography variant="body2">
+                    <Typography
+                      variant="subtitle2"
+                      sx={{
+                        fontWeight: 750,
+                        fontSize: "18px",
+                      }}
+                    >
                       {blog.author.userName}
                     </Typography>
-                    <Typography variant="body2">
-                      {new Date(blog.createdAt).toLocaleDateString()}
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: "#64748b",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
                     </Typography>
                   </Box>
                 </Box>
+                <Stack
+                  direction="row"
+                  sx={{
+                    // border:'2px solid red',
+                    display: "flex",
+                    justifyContent: "end",
+                    mt: 0.5,
+                  }}
+                >
+                  <IconButton
+                    size="large"
+                    sx={{
+                      "&:hover": {
+                        color: "mediumslateblue",
+                      },
+                    }}
+                    component={Link}
+                    to={`/blog/${blog.id}`}
+                  >
+                    <FaExternalLinkAlt size={15} />
+                  </IconButton>
+                </Stack>
               </CardContent>
             </Card>
           </Grid>

@@ -11,11 +11,14 @@ import {
   Menu,
   MenuList,
   MenuItem,
+  Box,
 } from "@mui/material";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaFeather } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { FaPowerOff } from "react-icons/fa6";
+import { ImProfile } from "react-icons/im";
 
 const Navbar = () => {
   const [anchorUserMenu, setAnchorUserMenu] = useState<null | HTMLElement>(
@@ -48,13 +51,55 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="fixed">
+    <AppBar
+      position="fixed"
+      elevation={0}
+      sx={{
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
+        backdropFilter: "blur(20px)",
+        borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
+        color: "black",
+      }}
+    >
       <Toolbar
         sx={{
           boxShadow: 3,
           // backgroundColor:'white'
         }}
       >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Box
+            sx={{
+              width: 35,
+              height: 35,
+              borderRadius: "10px",
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              mr: 1,
+            }}
+          >
+            <FaFeather color="white" size={16} />
+          </Box>
+          <Typography
+            variant="h5"
+            component={Link}
+            to="/"
+            sx={{
+              textDecoration: "none",
+              color: "black",
+              fontWeight: 750,
+              fontSize: "25px",
+              "&:hover": {
+                color: "mediumslateblue",
+                transition: "color 0.2s ease",
+              },
+            }}
+          >
+            Blogit
+          </Typography>
+        </Box>
         <Typography
           variant="h6"
           sx={{ flexGrow: 1 }}
@@ -77,27 +122,70 @@ const Navbar = () => {
               sm: "none",
               md: "flex",
             },
+            alignItems: "center",
           }}
         >
           {isLoggedIn() ? (
             <>
-              <Button color="inherit" component={Link} to="/blog">
-                Create Blog
+              <Button
+                component={Link}
+                to="/"
+                sx={{
+                  color: "#4a5568",
+                  fontWeight: 500,
+                  textTransform: "none",
+                  fontSize: "20px",
+                  px: 2,
+                  py: 1,
+                  borderRadius: "8px",
+                  "&:hover": {
+                    backgroundColor: "rgba(102, 126, 234, 0.08)",
+                    color: "#667eea",
+                  },
+                }}
+              >
+                Blogs
               </Button>
-              <Button color="inherit" component={Link} to="/blogs">
-                My Blogs
+              <Button
+                component={Link}
+                to="/blog"
+                sx={{
+                  color: "#4a5568",
+                  fontWeight: 500,
+                  textTransform: "none",
+                  px: 2,
+                  py: 1,
+                  borderRadius: "8px",
+                  fontSize: "20px",
+                  "&:hover": {
+                    backgroundColor: "rgba(102, 126, 234, 0.08)",
+                    color: "#667eea",
+                  },
+                }}
+              >
+                Create
               </Button>
-              <Button color="inherit" onClick={handleLogout}>
-                Logout
-              </Button>
+
               <IconButton
                 size="large"
                 edge="start"
-                color="inherit"
                 onClick={openUserMenu}
+                sx={{
+                  width: 35,
+                  height: 35,
+                  fontSize: "15px",
+                  fontWeight: 600,
+                  backgroundImage:
+                    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  color: "white",
+                  "&:hover": {
+                    opacity: 0.9,
+                  },
+                }}
               >
                 <FaUser />
               </IconButton>
+
               <Menu
                 open={Boolean(anchorUserMenu)}
                 onClose={closeUserMenu}
@@ -110,6 +198,16 @@ const Navbar = () => {
                   vertical: "top",
                   horizontal: "left",
                 }}
+                sx={{
+                  mt: 1,
+                  "& .MuiPaper-root": {
+                    borderRadius: "10px",
+                    minWidth: 180,
+                    boxShadow: 2,
+                    border: "1px solid rgba(0, 0, 0, 0.08)",
+                    overflow: "visible",
+                  },
+                }}
               >
                 <MenuList
                   sx={{
@@ -121,9 +219,21 @@ const Navbar = () => {
                     component={Link}
                     to="/user-profile"
                   >
-                    User Profile
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: 1.5 }}
+                    >
+                      User Profile
+                      <ImProfile size={18} />
+                    </Box>
                   </MenuItem>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: 1.5 }}
+                    >
+                      Logout
+                      <FaPowerOff size={18} />
+                    </Box>
+                  </MenuItem>
                 </MenuList>
               </Menu>
             </>
