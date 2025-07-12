@@ -222,7 +222,7 @@ const Navbar = () => {
                     <Box
                       sx={{ display: "flex", alignItems: "center", gap: 1.5 }}
                     >
-                      User Profile
+                      My Profile
                       <ImProfile size={18} />
                     </Box>
                   </MenuItem>

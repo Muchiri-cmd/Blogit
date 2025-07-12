@@ -41,6 +41,7 @@ const UpdatePassword = () => {
           p: 5,
           boxShadow: 2,
           width: "500px",
+          height: "480px",
         }}
         elevation={6}
         variant="outlined"

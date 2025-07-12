@@ -60,7 +60,7 @@ const Blogs = ({ blogs }: BlogsProps) => {
         }}
       >
         {blogs.map((blog, index) => (
-          <Grid size={3} key={index}>
+          <Grid size={4} key={index}>
             <Card
               sx={{
                 // border:'2px solid red',

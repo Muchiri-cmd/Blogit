@@ -8,7 +8,7 @@ import {
   Grid,
   TextField,
   Button,
-  Input,
+  LinearProgress,
 } from "@mui/material";
 import { getUser, updateUser } from "../services/user";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,9 @@ const UpdateUserForm = () => {
   const [email, setEmail] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -59,20 +62,44 @@ const UpdateUserForm = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    setIsUploading(true);
+    setUploadProgress(0);
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", CLOUDINARY_PRESET);
 
     try {
+      const progressInterval = setInterval(() => {
+        setUploadProgress((prev) => {
+          if (prev >= 90) {
+            clearInterval(progressInterval);
+            return prev;
+          }
+          return prev + Math.random() * 15;
+        });
+      }, 200);
+
       const res = await fetch(CLOUDINARY_URL, {
         method: "POST",
         body: formData,
       });
 
+      clearInterval(progressInterval);
+      setUploadProgress(100);
+
+      if (!res.ok) {
+        throw new Error(`Upload failed: ${res.status} ${res.statusText}`);
+      }
+
       const data = await res.json();
       setProfilePic(data.secure_url);
     } catch (error) {
       console.error("Cloudinary upload failed", error);
+      setUploadProgress(0);
+    } finally {
+      setIsUploading(false);
+      setTimeout(() => setUploadProgress(0), 1000);
     }
   };
 
@@ -92,6 +119,7 @@ const UpdateUserForm = () => {
             p: 5,
             boxShadow: 2,
             marginTop: "25px",
+            minHeight: "500px",
           }}
           elevation={6}
           variant="outlined"
@@ -158,18 +186,57 @@ const UpdateUserForm = () => {
                 )}
 
                 <Box>
-                  <Input
+                  <input
                     type="file"
-                    inputRef={fileInputRef}
+                    accept="image/*"
+                    ref={fileInputRef}
                     onChange={handleFileChange}
+                    style={{ display: "none" }}
                   />
+
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     onClick={() => fileInputRef.current?.click()}
-                    sx={{ mt: 1 }}
+                    disabled={isUploading}
+                    sx={{
+                      width: "100%",
+                      height: 120,
+                      borderRadius: 2,
+                      borderStyle: "dashed",
+                      borderWidth: 2,
+                      background: "rgba(102, 126, 234, 0.05)",
+                      "&:hover": {
+                        background: "rgba(102, 126, 234, 0.1)",
+                      },
+                    }}
                   >
-                    Upload New Picture
+                    <Box textAlign="center">
+                      <Typography variant="body1" fontWeight={600}>
+                        {isUploading
+                          ? "Uploading Image..."
+                          : "Choose Profile Picture"}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        PNG, JPG, WebP or GIF
+                      </Typography>
+                    </Box>
                   </Button>
+
+                  {isUploading && (
+                    <Box mt={2}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={uploadProgress}
+                        sx={{
+                          height: 8,
+                          borderRadius: 4,
+                        }}
+                      />
+                      <Typography variant="body2" textAlign="center" mt={1}>
+                        {Math.round(uploadProgress)}% uploaded
+                      </Typography>
+                    </Box>
+                  )}
                 </Box>
               </Box>
 
@@ -177,7 +244,7 @@ const UpdateUserForm = () => {
                 variant="contained"
                 sx={{ mt: 2 }}
                 type="submit"
-                disabled={!profilePic}
+                // disabled={!profilePic}
               >
                 Update User
               </Button>

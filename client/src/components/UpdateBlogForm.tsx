@@ -6,7 +6,9 @@ import {
   Stack,
   TextField,
   Button,
-  Input,
+  Card,
+  LinearProgress,
+  CardMedia,
 } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
 import { getBlog, updateBlog } from "../services/blogs";
@@ -35,6 +37,9 @@ const UpdateBlogForm = () => {
   const [content, setContent] = useState("");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -73,20 +78,47 @@ const UpdateBlogForm = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    if (!allowedTypes.includes(file.type)) return;
+
+    setIsUploading(true);
+    setUploadProgress(0);
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", CLOUDINARY_PRESET);
 
     try {
+      const progressInterval = setInterval(() => {
+        setUploadProgress((prev) => {
+          if (prev >= 90) {
+            clearInterval(progressInterval);
+            return prev;
+          }
+          return prev + Math.random() * 15;
+        });
+      }, 200);
+
       const res = await fetch(CLOUDINARY_URL, {
         method: "POST",
         body: formData,
       });
 
+      clearInterval(progressInterval);
+      setUploadProgress(100);
+
+      if (!res.ok) {
+        throw new Error(`Upload failed: ${res.status} ${res.statusText}`);
+      }
+
       const data = await res.json();
       setFeaturedImg(data.secure_url);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Cloudinary upload failed", error);
+      setUploadProgress(0);
+    } finally {
+      setIsUploading(false);
+      setTimeout(() => setUploadProgress(0), 1000);
     }
   };
 
@@ -101,6 +133,7 @@ const UpdateBlogForm = () => {
           justifyContent: "center",
           alignItems: "center",
           minHeight: "88vh",
+          padding: 2,
         }}
       >
         <Paper
@@ -108,80 +141,165 @@ const UpdateBlogForm = () => {
             p: 5,
             boxShadow: 2,
             width: "80%",
+            border: "1px solid lightgrey",
+            borderRadius: 3,
           }}
-          elevation={6}
+          elevation={0}
           variant="outlined"
         >
-          <Typography variant="h5" mb={3} textAlign="center">
-            Update Blog Post
+          <Typography
+            variant="h5"
+            mb={3}
+            textAlign="center"
+            sx={{
+              fontWeight: 700,
+              background: "linear-gradient(45deg, #667eea, #764ba2)",
+              backgroundClip: "text",
+              textFillColor: "transparent",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            Create Blog Post
+          </Typography>
+          <Typography
+            variant="body1"
+            mb={2}
+            textAlign="center"
+            color="text.secondary"
+          >
+            Share your thoughts with the world
           </Typography>
           <form action="" onSubmit={handleUpdateBlog}>
-            <Stack spacing={2}>
+            <Stack spacing={3}>
               <TextField
                 label="Title"
-                type="title"
+                type="text"
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                variant="outlined"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 2,
+                  },
+                }}
+                helperText="Give your blog post a catchy title"
               />
               <TextField
                 label="Synopsis"
-                type="synopsis"
+                type="text"
                 required
                 value={synopsis}
                 onChange={(e) => setSynopsis(e.target.value)}
+                variant="outlined"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 2,
+                  },
+                }}
+                helperText="Write a brief summary of your blog post"
               />
-
               <TextField
                 label="Content"
-                type="content"
+                placeholder="Write your blog post here using markdown syntax..."
                 required
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 multiline
-                rows={7}
+                rows={8}
+                variant="outlined"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 2,
+                  },
+                }}
+                helperText="Use markdown syntax for formatting (e.g., **bold**, *italic*, # headers)"
               />
 
-              <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-                {featuredImg && (
+              <Box>
+                <Typography variant="h6" mb={2} sx={{ fontWeight: 600 }}>
+                  Featured Image
+                </Typography>
+
+                {!featuredImg ? (
                   <Box>
-                    <Typography variant="body2" mb={1}>
-                      Current Featured Img:
-                    </Typography>
-                    <img
-                      src={featuredImg}
-                      alt="Profile"
-                      style={{
-                        width: "200px",
-                        height: "200px",
-                        objectFit: "cover",
-                        border: "1px solid #ccc",
-                      }}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      style={{ display: "none" }}
                     />
+
+                    <Button
+                      variant="outlined"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={isUploading}
+                      sx={{
+                        width: "100%",
+                        height: 120,
+                        borderRadius: 2,
+                        borderStyle: "dashed",
+                        borderWidth: 2,
+                        background: "rgba(102, 126, 234, 0.05)",
+                        "&:hover": {
+                          background: "rgba(102, 126, 234, 0.1)",
+                        },
+                      }}
+                    >
+                      <Box textAlign="center">
+                        <Typography variant="body1" fontWeight={600}>
+                          {isUploading
+                            ? "Uploading Image..."
+                            : "Choose Featured Image"}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          PNG, JPG, WebP or GIF
+                        </Typography>
+                      </Box>
+                    </Button>
+
+                    {isUploading && (
+                      <Box mt={2}>
+                        <LinearProgress
+                          variant="determinate"
+                          value={uploadProgress}
+                          sx={{
+                            height: 8,
+                            borderRadius: 4,
+                            backgroundColor: "rgba(102, 126, 234, 0.1)",
+                            "& .MuiLinearProgress-bar": {
+                              background:
+                                "linear-gradient(45deg, #667eea, #764ba2)",
+                            },
+                          }}
+                        />
+                        <Typography variant="body2" textAlign="center" mt={1}>
+                          {Math.round(uploadProgress)}% uploaded
+                        </Typography>
+                      </Box>
+                    )}
                   </Box>
+                ) : (
+                  <Card sx={{ borderRadius: 2, overflow: "hidden" }}>
+                    <Box>
+                      <CardMedia
+                        component="img"
+                        height="250"
+                        image={featuredImg}
+                        alt="Featured image preview"
+                      />
+                    </Box>
+                  </Card>
                 )}
-
-                <Box>
-                  <Input
-                    type="file"
-                    inputRef={fileInputRef}
-                    onChange={handleFileChange}
-                  />
-                  <Button
-                    variant="contained"
-                    onClick={() => fileInputRef.current?.click()}
-                    sx={{ mt: 1 }}
-                  >
-                    Upload New Picture
-                  </Button>
-                </Box>
               </Box>
-
               <Button
                 variant="contained"
                 sx={{ mt: 2 }}
                 type="submit"
-                disabled={!featuredImg}
+                // onClick={handleAddBlog}
+                // disabled={!featuredImg}
               >
                 Update Blog
               </Button>

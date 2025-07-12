@@ -32,7 +32,7 @@ const Blog = () => {
     author: {
       userName: "",
       profilePic: "",
-      email:''
+      email: "",
     },
     content: "",
     title: "",
@@ -257,6 +257,14 @@ const Blog = () => {
                   "&:hover": {
                     borderBottom: "1px solid #667eea",
                   },
+                },
+                "& strong, & b": {
+                  fontWeight: 700,
+                  color: "#1a1a1a",
+                },
+                "& em, & i": {
+                  fontStyle: "italic",
+                  color: "#374151",
                 },
               }}
             >
