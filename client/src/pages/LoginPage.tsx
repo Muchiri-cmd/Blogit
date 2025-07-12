@@ -38,7 +38,7 @@ const LoginPage = () => {
     <>
       <Box
         sx={{
-          height: "96vh",
+          height: "100vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -46,24 +46,45 @@ const LoginPage = () => {
       >
         <Paper
           sx={{
-            p: 5,
-            boxShadow: 2,
-            width: "500px",
+            p: 6,
+            boxShadow: 6,
+            width: "600px",
+            borderRadius: "10px",
           }}
-          elevation={6}
-          variant="outlined"
+          elevation={0}
         >
-          <Typography variant="h5" mb={3} textAlign="center">
-            Login
+          <Typography
+            variant="h4"
+            sx={{
+              mb: 2,
+              textAlign: "center",
+              fontWeight: 600,
+            }}
+          >
+            Welcome Back
           </Typography>
+
+          <Typography
+            variant="body1"
+            sx={{
+              mb: 4,
+              textAlign: "center",
+              color: "text.secondary",
+              fontSize: "16px",
+            }}
+          >
+            Please sign in to your account
+          </Typography>
+
           <form action="">
-            <Stack spacing={2}>
+            <Stack spacing={3}>
               <TextField
                 label="Email"
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                fullWidth
               />
               <TextField
                 label="Password"
@@ -71,16 +92,58 @@ const LoginPage = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                fullWidth
               />
               <Button
                 variant="contained"
-                sx={{ mt: 2 }}
+                sx={{
+                  py: 1.5,
+                  borderRadius: "10px",
+                  textTransform: "none",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  backgroundColor: "#3498db",
+                }}
                 type="submit"
                 onClick={handleLogin}
+                fullWidth
               >
-                Login
+                Sign In
               </Button>
-              <Button></Button>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{
+                    textAlign: "center",
+                    color: "text.secondary",
+                    mt: 2,
+                  }}
+                >
+                  Don't have an account?
+                </Typography>
+
+                <Button
+                  variant="text"
+                  sx={{
+                    textTransform: "none",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#3498db",
+                    mt: 2,
+                  }}
+                  onClick={() => navigate("/sign-up")}
+                >
+                  Sign up
+                </Button>
+              </Box>
             </Stack>
           </form>
         </Paper>
