@@ -129,7 +129,7 @@ const Navbar = () => {
             <>
               <Button
                 component={Link}
-                to="/"
+                to="/blogs"
                 sx={{
                   color: "#4a5568",
                   fontWeight: 500,

@@ -6,26 +6,14 @@ import {
   UserProfilePage,
 } from "./pages";
 import { Routes, Route } from "react-router-dom";
-import {
-  ProtectedRoute,
-  BlogForm,
-  UserBlogs,
-  UpdateBlogForm,
-} from "./components";
+import { ProtectedRoute, BlogForm, Blogs, UpdateBlogForm } from "./components";
 import "./App.css";
 
 const App = () => {
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<RegisterPage />} />
         <Route
@@ -48,7 +36,7 @@ const App = () => {
           path="/blogs"
           element={
             <ProtectedRoute>
-              <UserBlogs />
+              <Blogs />
             </ProtectedRoute>
           }
         />
