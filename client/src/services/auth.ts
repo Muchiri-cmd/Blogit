@@ -17,13 +17,13 @@ interface RegisterData {
   confirmPassword: string;
 }
 
-const login = (data: LoginData) => {
+const login = async (data: LoginData) => {
   const req = axios.post(loginUrl, data);
   return req.then((res) => res.data);
 };
 
-const register = (data: RegisterData) => {
-  const req = axios.post(registerUrl, data);
+const register = async (data: RegisterData) => {
+  const req =  axios.post(registerUrl, data);
   return req.then((res) => res.data);
 };
 
