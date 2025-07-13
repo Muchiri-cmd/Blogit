@@ -37,6 +37,7 @@ const RegisterPage = () => {
       confirmPassword,
     };
     try {
+      console.log("data", data);
       await register(data);
       console.log("successful registration");
       navigate("/login");
