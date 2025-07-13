@@ -1,6 +1,7 @@
 import axios from "axios";
-const registerUrl = "http://localhost:3000/api/auth/register";
-const loginUrl = "http://localhost:3000/api/auth/login";
+const API_BASE= 'https://blogit-backend-0zk3.onrender.com'
+const registerUrl = `${API_BASE}/api/auth/register`;
+const loginUrl = `${API_BASE}api/auth/login`;
 
 interface LoginData {
   email: string;

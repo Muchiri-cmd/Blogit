@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3000/api/blogs";
+const API_BASE= 'https://blogit-backend-0zk3.onrender.com'
+const baseUrl = `${API_BASE}/api/blogs`;
 
 const token = localStorage.getItem("token");
 
