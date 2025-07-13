@@ -7,7 +7,6 @@ import {
   Card,
   CardMedia,
   CardContent,
-  Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { getUserBlogs, deleteBlog } from "../services/blogs";

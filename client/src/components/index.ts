@@ -2,7 +2,7 @@ import Navbar from "./Navbar";
 import Blogs from "./Blogs";
 import BlogForm from "./BlogForm";
 import ProtectedRoute from "./ProtectedRoute";
-import UserBlogs from "./userBlogs";
+import UserBlogs from "./UserBlogs";
 import UpdateBlogForm from "./UpdateBlogForm";
 import UpdateUserForm from "./UpdateUserForm";
 import UpdatePassword from "./UpdatePassword";

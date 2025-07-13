@@ -98,7 +98,7 @@ const RegisterPage = () => {
           <form action="">
             <Stack spacing={2}>
               <Grid container spacing={3}>
-                <Grid item xs={6}>
+                <Grid >
                   <TextField
                     label="First Name"
                     type="text"
@@ -108,7 +108,7 @@ const RegisterPage = () => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid >
                   <TextField
                     label="Last Name"
                     type="text"

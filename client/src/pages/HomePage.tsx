@@ -148,7 +148,7 @@ const HomePage = () => {
             </Typography>
 
             <Grid container spacing={4}>
-              <Grid item xs={12} md={4}>
+              <Grid >
                 <Paper
                   sx={{
                     p: 4,
@@ -181,7 +181,7 @@ const HomePage = () => {
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} md={4}>
+              <Grid >
                 <Paper
                   sx={{
                     p: 4,
@@ -213,7 +213,7 @@ const HomePage = () => {
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} md={4}>
+              <Grid >
                 <Paper
                   sx={{
                     p: 4,
