@@ -17,6 +17,20 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    const existingUser = await client.user.findFirst({
+      where: {
+        OR: [
+          { userName },
+          { email },
+        ],
+      },
+    });
+
+    if (existingUser) {
+      res.status(409).json({ error: "Username or email already in use" });
+      return;
+    }
+
     const hashedPassword = await hashPassword(password);
 
     const newUser = await client.user.create({
