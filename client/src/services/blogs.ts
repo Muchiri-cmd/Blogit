@@ -40,7 +40,7 @@ const getBlog = async (id: number) => {
 };
 
 const getUserBlogs = async () => {
-  const res = await axios.get("http://localhost:3000/api/user/blogs", {
+  const res = await axios.get(`${API_BASE}/api/user/blogs`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
