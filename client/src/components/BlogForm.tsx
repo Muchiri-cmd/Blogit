@@ -37,7 +37,7 @@ const BlogForm = () => {
     setTitle("");
     setSynopsis("");
     setContent("");
-    navigate("/");
+    navigate("/blogs");
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
