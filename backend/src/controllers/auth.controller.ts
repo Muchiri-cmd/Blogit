@@ -7,6 +7,7 @@ import { AuthenticatedRequest } from "../middleware/auth.middleware";
 const client = new PrismaClient();
 
 const registerUser = async (req: Request, res: Response): Promise<void> => {
+  console.log("request body:", req.body)
   const { firstName, lastName, userName, email, password, profilePic } =
     req.body;
 
