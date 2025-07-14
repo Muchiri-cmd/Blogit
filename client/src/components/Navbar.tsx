@@ -269,21 +269,32 @@ const Navbar = () => {
               width: "120px",
             }}
           >
-            <MenuItem onClick={closeMobileMenu} component={Link} to="/">
-              Home
-            </MenuItem>
             <MenuItem onClick={closeMobileMenu} component={Link} to="/blogs">
               Blogs
             </MenuItem>
-            <MenuItem onClick={closeMobileMenu} component={Link} to="/user-profile">
-              User Profile
-            </MenuItem>
-            <MenuItem onClick={closeMobileMenu} component={Link} to="/login">
-              Login
-            </MenuItem>
-            <MenuItem onClick={closeMobileMenu} component={Link} to="/register">
-              SignUp
-            </MenuItem>
+            {isLoggedIn() ? (
+              <>
+                <MenuItem onClick={closeMobileMenu} component={Link} to="/user-profile">
+                  User Profile
+                </MenuItem>
+                <MenuItem onClick={() => {
+                  localStorage.removeItem("token");
+                  closeMobileMenu();
+                  navigate("/login");
+                }}>
+                  Logout
+                </MenuItem>
+              </>
+            ) : (
+              <>
+                <MenuItem onClick={closeMobileMenu} component={Link} to="/login">
+                  Login
+                </MenuItem>
+                <MenuItem onClick={closeMobileMenu} component={Link} to="/register">
+                  Sign Up
+                </MenuItem>
+              </>
+            )}
           </MenuList>
         </Menu>
       </Toolbar>
