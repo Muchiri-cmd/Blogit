@@ -1,0 +1,21 @@
+
+<svg width="160" height="50" viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background rounded square -->
+  <rect x="0" y="0" width="40" height="40" rx="12" fill="url(#grad1)" />
+
+  <!-- Feather icon (simplified) -->
+  <path d="M18 11C21 13 20 17 17 20L13 24C12 25 12 26 13 27C14 28 15 28 16 27L20 23C22 21 24 17 22 14C20 11 18 11 18 11Z" fill="white"/>
+
+  <!-- Blogit text -->
+  <text x="48" y="26" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#000">
+    Blogit
+  </text>
+
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="grad1" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8E2DE2"/>
+      <stop offset="100%" stop-color="#4A00E0"/>
+    </linearGradient>
+  </defs>
+</svg>
