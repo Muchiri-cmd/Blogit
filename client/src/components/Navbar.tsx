@@ -100,7 +100,7 @@ const Navbar = () => {
             Blogit
           </Typography>
         </Box>
-
+        <Box></Box>
         <Stack
           direction="row"
           spacing={2}
