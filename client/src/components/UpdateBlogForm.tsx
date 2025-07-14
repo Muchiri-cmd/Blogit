@@ -290,10 +290,24 @@ const UpdateBlogForm = () => {
                         image={featuredImg}
                         alt="Featured image preview"
                       />
-                    </Box>
+                    </Box> 
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={() => setFeaturedImg("")}
+                      sx={{
+                        borderRadius: 2,
+                        fontWeight: 600,
+                        textTransform: "none",
+                      }}
+                    >
+                      Replace Image
+                    </Button>
                   </Card>
+                  
                 )}
               </Box>
+             
               <Button
                 variant="contained"
                 sx={{ mt: 2 }}
