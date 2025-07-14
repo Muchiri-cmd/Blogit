@@ -65,6 +65,9 @@ const Navbar = () => {
         sx={{
           boxShadow: 3,
           // backgroundColor:'white'
+          // border:'2px solid red',
+          display:'flex',
+          justifyContent:'space-between'
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -100,7 +103,7 @@ const Navbar = () => {
             Blogit
           </Typography>
         </Box>
-
+        
         <Stack
           direction="row"
           spacing={2}
