@@ -243,7 +243,7 @@ const Navbar = () => {
         <IconButton
           onClick={openMobileMenu}
           sx={{
-            color: "white",
+            color: "black",
             display: {
               md: "none",
             },

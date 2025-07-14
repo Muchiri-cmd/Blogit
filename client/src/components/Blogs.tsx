@@ -81,7 +81,7 @@ const Blogs = () => {
             <CircularProgress />
           </Box>
         ) : (
-          <Grid
+          <Grid 
             container
             spacing={2}
             sx={{
@@ -89,7 +89,7 @@ const Blogs = () => {
             }}
           >
             {blogs.map((blog, index) => (
-              <Grid size={4} key={index}>
+              <Grid size={{ xs: 12, md: 4, sm:6 }} key={index} component="div">
                 <Card
                   sx={{
                     // border:'2px solid red',
