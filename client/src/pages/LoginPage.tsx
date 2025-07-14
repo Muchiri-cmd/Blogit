@@ -34,12 +34,12 @@ const LoginPage = () => {
     } catch (error) {
       console.error("An error occurred during login", error);
       if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError<{ message: string }>;
+        const axiosError = error as AxiosError<{ error?: string }>;
     
-        const message = axiosError.response?.data?.message || "Login failed.";
+        const message = axiosError.response?.data?.error || "Login failed.";
         alert(message);
       } else {
-        alert("Registration failed. Please try again later.");
+        alert("Login failed. Please try again later.");
       }
     }finally{
       setLoading(false)
