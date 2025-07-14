@@ -65,8 +65,10 @@ const UserBlogs = () => {
           padding: "2rem",
         }}
       >
-        {blogs.length > 0 ? (
-          <Box sx={{ display: "flex" }}>No blogs yet</Box>
+        {blogs.length === 0 ? (
+          <Box sx={{ display: "flex" }}>
+            <Typography variant="body1">No blogs yet</Typography>
+          </Box>
         ) : (
           <Grid container spacing={2} sx={{ width: "100%" }}>
             {blogs.map((blog, index) => (
