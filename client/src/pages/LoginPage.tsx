@@ -5,6 +5,7 @@ import {
   Stack,
   Typography,
   Button,
+  CircularProgress
 } from "@mui/material";
 import type { MouseEvent } from "react";
 import { login } from "../services/auth";
@@ -16,12 +17,14 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loading,setLoading] = useState(false)
+  
   const handleLogin = async (e: MouseEvent) => {
     e.preventDefault();
     // console.log("loggin in")
     const data = { email, password };
     try {
+      setLoading(true)
       const res = await login(data);
       // console.log("loggin in successful", res);
       const token = res.token;
@@ -30,6 +33,8 @@ const LoginPage = () => {
     } catch (error) {
       console.error("An error occurred during login", error);
       alert(`Ooops. Something went wrong`)
+    }finally{
+      setLoading(false)
     }
     setEmail("");
     setPassword("");
@@ -108,8 +113,10 @@ const LoginPage = () => {
                 type="submit"
                 onClick={handleLogin}
                 fullWidth
+                disabled={loading}
+                startIcon={loading ? <CircularProgress size={20} sx={{ color: "white" }} /> : null}
               >
-                Sign In
+                {loading ? "Signing In..." : "Sign In"}
               </Button>
 
               <Box

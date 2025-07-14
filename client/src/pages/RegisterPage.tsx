@@ -6,6 +6,7 @@ import {
   Typography,
   Grid,
   Button,
+  CircularProgress
 } from "@mui/material";
 import { useState } from "react";
 import { register } from "../services/auth";
@@ -21,6 +22,8 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [loading,setLoading] = useState(false)
 
   const handleRegister = async (e: MouseEvent) => {
     e.preventDefault();
@@ -38,12 +41,15 @@ const RegisterPage = () => {
     };
     try {
       console.log("data", data);
+      setLoading(true)
       await register(data);
       console.log("successful registration");
       navigate("/login");
     } catch (error) {
       console.error("An error occurred during registration", error);
       alert("Registration failed. Please try again later.");
+    } finally{ 
+      setLoading(false)
     }
 
     setFirstName("");
@@ -166,9 +172,11 @@ const RegisterPage = () => {
                 }}
                 type="submit"
                 onClick={handleRegister}
-                fullWidth
+                fullWidth           
+                disabled={loading}
+                startIcon={loading ? <CircularProgress size={20} sx={{ color: "white" }} /> : null}
               >
-                Register
+                  {loading ? "Signing you up..." : "Sign Up"}
               </Button>
 
               <Box

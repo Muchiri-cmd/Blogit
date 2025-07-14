@@ -2,7 +2,7 @@ import axios from "axios";
 const API_BASE = "https://blogit-backend-0zk3.onrender.com";
 const baseUrl = `${API_BASE}/api/blogs`;
 
-const token = localStorage.getItem("token");
+
 
 interface BlogData {
   title: string;
@@ -12,6 +12,7 @@ interface BlogData {
 }
 
 const getAllBlogs = async () => {
+  const token = localStorage.getItem("token");
   const res = await axios.get(baseUrl, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -21,6 +22,7 @@ const getAllBlogs = async () => {
 };
 
 const createNewBlog = async (blogData: BlogData) => {
+  const token = localStorage.getItem("token");
   const res = await axios.post(baseUrl, blogData, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -30,6 +32,7 @@ const createNewBlog = async (blogData: BlogData) => {
 };
 
 const getBlog = async (id: number) => {
+  const token = localStorage.getItem("token");
   console.log("Requesting blog from:", `${baseUrl}/${id}`);
   const res = await axios.get(`${baseUrl}/${id}`, {
     headers: {
@@ -40,6 +43,7 @@ const getBlog = async (id: number) => {
 };
 
 const getUserBlogs = async () => {
+  const token = localStorage.getItem("token");
   const res = await axios.get(`${API_BASE}/api/user/blogs`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -49,6 +53,7 @@ const getUserBlogs = async () => {
 };
 
 const deleteBlog = async (id: number) => {
+  const token = localStorage.getItem("token");
   console.log("calling api to delete");
   const res = await axios.delete(`${baseUrl}/${id}`, {
     headers: {
@@ -59,6 +64,7 @@ const deleteBlog = async (id: number) => {
 };
 
 const updateBlog = async (id: number, updateData: BlogData) => {
+  const token = localStorage.getItem("token");
   const res = await axios.patch(`${baseUrl}/${id}`, updateData, {
     headers: {
       Authorization: `Bearer ${token}`,
