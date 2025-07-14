@@ -38,8 +38,14 @@ const Blogs = () => {
       try {
         setLoading(true);
         const blogs = await getAllBlogs();
-        // console.log(blogs);
-        setBlogs(blogs);
+        // console.log(blogs);'
+        
+        // Sort blogs
+        const sortedBlogs = blogs.sort(
+          (a: Blog, b: Blog) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+
+        setBlogs(sortedBlogs);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       } finally {
