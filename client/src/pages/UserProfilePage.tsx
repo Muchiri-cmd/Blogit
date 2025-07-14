@@ -71,24 +71,28 @@ const UserProfilePage = () => {
           </Typography>
 
           <Box
-          sx={{
-            display: "flex",
-            flexDirection: {
-              xs: "column", 
-              md: "row",    
-            },
-            gap: 3,
-            alignItems: "start",
-            justifyContent: "start",
-          }}
-        >
-          <Box sx={{ flex: 1 }}>
-            <UpdateUserForm />
+            sx={{
+              display: "flex",
+              flexDirection: {
+                xs: "column",
+                md: "row",
+              },
+              gap: {
+                xs: 2,
+                md: 4,
+              },
+              alignItems: "stretch",
+              justifyContent: "start",
+              mt: 3,
+            }}
+          >
+            <Box sx={{ flex: 1 }}>
+              <UpdateUserForm />
+            </Box>
+            <Box sx={{ flex: 1 }}>
+              <UpdatePassword />
+            </Box>
           </Box>
-          <Box sx={{ flex: 1 }}>
-            <UpdatePassword />
-          </Box>
-        </Box>
         </Paper>
 
         <Paper

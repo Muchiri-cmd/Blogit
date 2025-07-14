@@ -28,15 +28,19 @@ interface Blog {
 
 const UserBlogs = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [isLoading,setIsLoading] = useState(false)
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
+        setIsLoading(true)
         const userBlogs = await getUserBlogs();
         // console.log("UserBLogs", userBlogs);
         setBlogs(userBlogs);
       } catch (error) {
         console.error("Error fetching blogs:", error);
+      } finally {
+        setIsLoading(false)
       }
     };
     fetchBlogs();
@@ -65,11 +69,11 @@ const UserBlogs = () => {
           padding: "2rem",
         }}
       >
-        {blogs.length === 0 ? (
-          <Box sx={{ display: "flex" }}>
-            <Typography variant="body1">No blogs yet</Typography>
-          </Box>
-        ) : (
+        {isLoading ? (
+          <Typography variant="body1">Loading blogs...</Typography>
+        ) : blogs.length === 0 ? (
+          <Typography variant="body1">No blogs yet</Typography>
+        )  : (
           <Grid container spacing={2} sx={{ width: "100%" }}>
             {blogs.map((blog, index) => (
               <Grid size={{ xs: 12, md: 4, sm:6 }} key={index} component="div">
