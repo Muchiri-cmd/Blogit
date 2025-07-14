@@ -34,14 +34,17 @@ const UpdatePassword = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        px: 2, 
+        py: 4,
       }}
     >
       <Paper
         sx={{
-          p: 5,
+          p: { xs: 3, md: 5 },
           boxShadow: 2,
-          width: "500px",
+          maxWidth: "500px",
           height: "480px",
+          width:'100%'
         }}
         elevation={6}
         variant="outlined"

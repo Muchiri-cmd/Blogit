@@ -72,7 +72,7 @@ const UserBlogs = () => {
         ) : (
           <Grid container spacing={2} sx={{ width: "100%" }}>
             {blogs.map((blog, index) => (
-              <Grid size={6} key={index}>
+              <Grid size={{ xs: 12, md: 4, sm:6 }} key={index} component="div">
                 <Card
                   sx={{
                     // border:'2px solid red',
