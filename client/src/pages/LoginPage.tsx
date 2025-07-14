@@ -11,6 +11,7 @@ import type { MouseEvent } from "react";
 import { login } from "../services/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios, { AxiosError } from "axios";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -32,7 +33,14 @@ const LoginPage = () => {
       navigate("/");
     } catch (error) {
       console.error("An error occurred during login", error);
-      alert(`Ooops. Something went wrong`)
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<{ message: string }>;
+    
+        const message = axiosError.response?.data?.message || "Login failed.";
+        alert(message);
+      } else {
+        alert("Registration failed. Please try again later.");
+      }
     }finally{
       setLoading(false)
     }
