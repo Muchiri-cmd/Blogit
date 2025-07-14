@@ -249,7 +249,7 @@ const Navbar = () => {
             },
           }}
         >
-          <MdMenu />
+          <MdMenu size={28}/>
         </IconButton>
         <Menu
           open={Boolean(anchorMobileMenu)}
@@ -275,10 +275,13 @@ const Navbar = () => {
             <MenuItem onClick={closeMobileMenu} component={Link} to="/blogs">
               Blogs
             </MenuItem>
+            <MenuItem onClick={closeMobileMenu} component={Link} to="/user-profile">
+              User Profile
+            </MenuItem>
             <MenuItem onClick={closeMobileMenu} component={Link} to="/login">
               Login
             </MenuItem>
-            <MenuItem onClick={closeMobileMenu} component={Link} to="sign-up">
+            <MenuItem onClick={closeMobileMenu} component={Link} to="/register">
               SignUp
             </MenuItem>
           </MenuList>

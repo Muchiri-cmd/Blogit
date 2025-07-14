@@ -6,6 +6,7 @@ import {
   LinearProgress,
   Container,
   Stack,
+  CircularProgress
 } from "@mui/material";
 import { Navbar } from "../components";
 import { useEffect, useState } from "react";
@@ -39,12 +40,21 @@ const Blog = () => {
     createdAt: "",
   });
   const [readingProgress, setReadingProgress] = useState(0);
+  const [isLoading,setIsLoading] = useState(false)
 
   useEffect(() => {
     const fetchBlog = async () => {
-      const res = await getBlog(Number(id));
-      console.log("BLog:", res);
-      setBlog(res);
+      try {
+        setIsLoading(true)
+        const res = await getBlog(Number(id));
+        console.log("BLog:", res);
+        setBlog(res);
+      }catch(error){
+        console.error(`Error getting blog`, error)
+      } finally{
+        setIsLoading(false)
+      }
+     
     };
     fetchBlog();
   }, [id]);
@@ -101,7 +111,10 @@ const Blog = () => {
           // border:'2px solid red',
         }}
       >
-        <Container maxWidth="md">
+         {isLoading ? (
+          <Box sx={{ display: "flex", justifyContent: "center", py: 10 }}>
+            <CircularProgress />
+          </Box>):( <Container maxWidth="md">
           <Typography
             variant="h1"
             sx={{
@@ -271,7 +284,8 @@ const Blog = () => {
               <ReactMarkdown>{blog.content}</ReactMarkdown>
             </Box>
           </Paper>
-        </Container>
+        </Container>)}
+       
       </Box>
     </>
   );
