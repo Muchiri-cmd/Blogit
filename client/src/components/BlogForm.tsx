@@ -31,13 +31,18 @@ const BlogForm = () => {
 
   const handleAddBlog = async (e: FormEvent) => {
     e.preventDefault();
-    const blogData = { title, synopsis, content, featuredImg };
-    const res = await createNewBlog(blogData);
-    console.log("Blog created successfully:", res);
-    setTitle("");
-    setSynopsis("");
-    setContent("");
-    navigate("/blogs");
+    try {
+      const blogData = { title, synopsis, content, featuredImg };
+      const res = await createNewBlog(blogData);
+      console.log("Blog created successfully:", res);
+      setTitle("");
+      setSynopsis("");
+      setContent("");
+      navigate("/blogs");
+    } catch ( error ){
+      console.log(`Error , something went wrong.`, error);
+      alert('Oops, something went wrong , please try again later')
+    }
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

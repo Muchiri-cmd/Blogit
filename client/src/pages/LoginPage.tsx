@@ -29,6 +29,7 @@ const LoginPage = () => {
       navigate("/");
     } catch (error) {
       console.error("An error occurred during login", error);
+      alert(`Ooops. Something went wrong`)
     }
     setEmail("");
     setPassword("");

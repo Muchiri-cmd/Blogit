@@ -100,18 +100,6 @@ const Navbar = () => {
             Blogit
           </Typography>
         </Box>
-        <Typography
-          variant="h6"
-          sx={{ flexGrow: 1 }}
-          component={Link}
-          to="/"
-          style={{
-            textDecoration: "none",
-            color: "white",
-          }}
-        >
-          Blogit
-        </Typography>
 
         <Stack
           direction="row"

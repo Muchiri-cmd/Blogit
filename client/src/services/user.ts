@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE= 'https://blogit-backend-0zk3.onrender.com'
+const API_BASE = "https://blogit-backend-0zk3.onrender.com";
 const baseUrl = `${API_BASE}/api/user`;
 
 const token = localStorage.getItem("token");

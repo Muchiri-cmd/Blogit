@@ -65,121 +65,129 @@ const UserBlogs = () => {
           padding: "2rem",
         }}
       >
-        <Grid container spacing={2} sx={{ width: "100%" }}>
-          {blogs.map((blog, index) => (
-            <Grid size={6} key={index}>
-              <Card
-                sx={{
-                  // border:'2px solid red',
-                  height: "500px",
-                  width: "100%",
-                  boxShadow: 5,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "5px",
-                  overflow: "hidden",
-                  "&:hover": {
-                    transform: "translateY(-2px)",
-                    transition: "all 0.3s ease",
-                    cursor: "pointer",
-                  },
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  image={blog.featuredImg}
+        {blogs.length > 0 ? (
+          <Box sx={{ display: "flex" }}>No blogs yet</Box>
+        ) : (
+          <Grid container spacing={2} sx={{ width: "100%" }}>
+            {blogs.map((blog, index) => (
+              <Grid size={6} key={index}>
+                <Card
                   sx={{
-                    objectFit: "cover",
-                    height: 250,
-                    transition: "transform 0.3s ease",
+                    // border:'2px solid red',
+                    height: "500px",
+                    width: "100%",
+                    boxShadow: 5,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "5px",
+                    overflow: "hidden",
                     "&:hover": {
-                      transform: "scale(1.05)",
+                      transform: "translateY(-2px)",
+                      transition: "all 0.3s ease",
+                      cursor: "pointer",
                     },
                   }}
-                />
-                <CardContent
-                  sx={{ flex: 1, display: "flex", flexDirection: "column" }}
                 >
-                  <Typography
-                    variant="h5"
-                    component={Link}
-                    to={`/blog/${blog.id}`}
+                  <CardMedia
+                    component="img"
+                    image={blog.featuredImg}
                     sx={{
-                      textDecoration: "none",
-                      fontWeight: 700,
-                      lineHeight: 1.2,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      color: "black",
+                      objectFit: "cover",
+                      height: 250,
+                      transition: "transform 0.3s ease",
                       "&:hover": {
-                        color: "mediumslateblue",
-                        transition: "color 0.2s ease",
+                        transform: "scale(1.05)",
                       },
                     }}
+                  />
+                  <CardContent
+                    sx={{ flex: 1, display: "flex", flexDirection: "column" }}
                   >
-                    {blog.title}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      lineHeight: 1.4,
-                      flex: 1,
-                      mb: 1,
-                      mt: 1,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: "vertical",
-                    }}
-                  >
-                    {blog.synopsis}
-                  </Typography>
+                    <Typography
+                      variant="h5"
+                      component={Link}
+                      to={`/blog/${blog.id}`}
+                      sx={{
+                        textDecoration: "none",
+                        fontWeight: 700,
+                        lineHeight: 1.2,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        color: "black",
+                        "&:hover": {
+                          color: "mediumslateblue",
+                          transition: "color 0.2s ease",
+                        },
+                      }}
+                    >
+                      {blog.title}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        lineHeight: 1.4,
+                        flex: 1,
+                        mb: 1,
+                        mt: 1,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: "vertical",
+                      }}
+                    >
+                      {blog.synopsis}
+                    </Typography>
 
-                  <Box
-                    sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}
-                  >
-                    <Tooltip title="Edit Post">
-                      <IconButton
-                        component={Link}
-                        to={`/update-blog/${blog.id}`}
-                        sx={{
-                          backgroundColor: "#3498db",
-                          color: "white",
-                          "&:hover": {
-                            backgroundColor: "#2980b9",
-                          },
-                        }}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        gap: 1,
+                      }}
+                    >
+                      <Tooltip title="Edit Post">
+                        <IconButton
+                          component={Link}
+                          to={`/update-blog/${blog.id}`}
+                          sx={{
+                            backgroundColor: "#3498db",
+                            color: "white",
+                            "&:hover": {
+                              backgroundColor: "#2980b9",
+                            },
+                          }}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
 
-                    <Tooltip title="Delete Post">
-                      <IconButton
-                        onClick={() => handleDelete(Number(blog.id))}
-                        sx={{
-                          backgroundColor: "#e74c3c",
-                          color: "white",
-                          "&:hover": {
-                            backgroundColor: "#c0392b",
-                          },
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+                      <Tooltip title="Delete Post">
+                        <IconButton
+                          onClick={() => handleDelete(Number(blog.id))}
+                          sx={{
+                            backgroundColor: "#e74c3c",
+                            color: "white",
+                            "&:hover": {
+                              backgroundColor: "#c0392b",
+                            },
+                          }}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Box>
     </>
   );

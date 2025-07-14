@@ -43,7 +43,7 @@ const RegisterPage = () => {
       navigate("/login");
     } catch (error) {
       console.error("An error occurred during registration", error);
-      alert("Registration failed. Please try again.");
+      alert("Registration failed. Please try again later.");
     }
 
     setFirstName("");
@@ -99,7 +99,7 @@ const RegisterPage = () => {
           <form action="">
             <Stack spacing={2}>
               <Grid container spacing={3}>
-                <Grid >
+                <Grid>
                   <TextField
                     label="First Name"
                     type="text"
@@ -109,7 +109,7 @@ const RegisterPage = () => {
                     fullWidth
                   />
                 </Grid>
-                <Grid >
+                <Grid>
                   <TextField
                     label="Last Name"
                     type="text"

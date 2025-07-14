@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE= 'https://blogit-backend-0zk3.onrender.com'
+const API_BASE = "https://blogit-backend-0zk3.onrender.com";
 const registerUrl = `${API_BASE}/api/auth/register`;
 const loginUrl = `${API_BASE}/api/auth/login`;
 
@@ -23,7 +23,7 @@ const login = async (data: LoginData) => {
 };
 
 const register = async (data: RegisterData) => {
-  const req =  axios.post(registerUrl, data);
+  const req = axios.post(registerUrl, data);
   return req.then((res) => res.data);
 };
 
