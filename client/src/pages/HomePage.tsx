@@ -9,12 +9,17 @@ import {
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import { Navbar } from "../components";
+import { isLoggedIn } from "../utils/auth";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate("/sign-up");
+    if (isLoggedIn()) {
+      navigate("/create-blog");
+    } else {
+      navigate("/sign-up");
+    }
   };
 
   return (
